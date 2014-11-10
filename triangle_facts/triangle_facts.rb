@@ -17,32 +17,34 @@ class Triangle
     side1 != side2 && side2 != side3 && side1 != side3
   end
 
-  def right_angle?
-    puts 'This triangle is also a right triangle!' if @angles.include?(90)
+  def right?
+    puts 'This triangle is also a right triangle!' if angles.include?(90)
   end
 
-  def determine_triangle
+  def display_triangle_type
     puts 'This triangle is equilateral!' if equilateral?
     puts 'This triangle is isosceles!' if isosceles?
     puts 'This triangle is scalene!' if scalene?
-
-    right_angle?
+    puts "This triangle is also a right triangle" if right?
   end
 
   def recite_facts
-    @angles = [calculate_angle(side1, side2, side3),
-               calculate_angle(side2, side1, side3),
-               calculate_angle(side3, side1, side2)]
-
-    puts 'The angles of this triangle are ' + @angles.join(',')
-
-    determine_triangle
+    puts 'The angles of this triangle are ' + angles.join(',')
+    display_triangle_type
     puts ''
   end
 
-  def calculate_angle(uknown_leg, leg_1, leg_2)
-    radians_to_degrees(Math.acos((leg_1**2 + leg_2**2 - uknown_leg**2) /
-     (2.0 * leg_1 * leg_2)))
+  def angles
+    [calculate_angle(side1, side2, side3),
+     calculate_angle(side2, side1, side3),
+     calculate_angle(side3, side1, side2)]
+  end
+
+  def calculate_angle(unknown_leg, leg_1, leg_2)
+    numerator = (leg_1**2 + leg_2**2 - unknown_leg**2)
+    denominator = (2.0 * leg_1 * leg_2)
+
+    radians_to_degrees(Math.acos((numerator) / denominator))
   end
 
   def radians_to_degrees(rads)
