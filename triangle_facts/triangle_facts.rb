@@ -1,41 +1,48 @@
 class Triangle
-
   attr_accessor :side1, :side2, :side3
 
   def initialize(side1, side2, side3)
     @side1, @side2, @side3 = side1, side2, side3
   end
 
-  def equilateral
+  def equilateral?
     side1 == side2 && side2 == side3
   end
 
-  def isosceles
+  def isosceles?
     [side1, side2, side3].uniq.length == 2
   end
 
-  def scalene
-    side1 != side2 && side2 != side3
+  def scalene?
+    side1 != side2 && side2 != side3 && side1 != side3
+  end
+
+  def right_angle?
+    puts 'This triangle is also a right triangle!' if @angles.include?(90)
+  end
+
+  def determine_triangle
+    puts 'This triangle is equilateral!' if equilateral?
+    puts 'This triangle is isosceles!' if isosceles?
+    puts 'This triangle is scalene!' if scalene?
+
+    right_angle?
   end
 
   def recite_facts
-    angles = calculate_angles(side1, side2, side3)
-    puts 'The angles of this triangle are ' + angles.join(',')
+    @angles = [calculate_angle(side1, side2, side3),
+               calculate_angle(side2, side1, side3),
+               calculate_angle(side3, side1, side2)]
 
-    puts 'This triangle is equilateral!' if equilateral
-    puts 'This triangle is isosceles!' if isosceles
-    puts 'This triangle is scalene!' if scalene
+    puts 'The angles of this triangle are ' + @angles.join(',')
 
-    puts 'This triangle is also a right triangle!' if angles.include? 90
+    determine_triangle
     puts ''
   end
 
-  def calculate_angles(a, b, c)
-    ang_a = radians_to_degrees(Math.acos((b**2 + c**2 - a**2) / (2.0 * b * c)))
-    ang_b = radians_to_degrees(Math.acos((a**2 + c**2 - b**2) / (2.0 * a * c)))
-    ang_c = radians_to_degrees(Math.acos((a**2 + b**2 - c**2) / (2.0 * a * b)))
-
-    [ang_a, ang_b, ang_c]
+  def calculate_angle(uknown_leg, leg_1, leg_2)
+    radians_to_degrees(Math.acos((leg_1**2 + leg_2**2 - uknown_leg**2) /
+     (2.0 * leg_1 * leg_2)))
   end
 
   def radians_to_degrees(rads)
