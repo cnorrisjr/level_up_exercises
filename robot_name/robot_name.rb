@@ -19,17 +19,19 @@ class Robot
     @@register ||= Set.new
     @name_gen = args[:name_generator]
 
-    r_name = ('A'..'Z').to_a.sample(2).join("") + (0..9).to_a.sample(3).join("")
+    @name_gen.nil? ? create_name { random_name } : create_name { @name_gen.call }
+  end
 
-    @name_gen.nil? ? create_name { r_name } : create_name { @name_gen.call }
+  def random_name
+    (('A'..'Z').to_a.sample(2) + (0..9).to_a.sample(3)).join("")
   end
 
   def create_name
     @name = yield
-    validates_name
+    validate_name
   end
 
-  def validates_name
+  def validate_name
     raise IllegalCharactersError unless @name =~ /[[:alpha:]]{2}[[:digit:]]{3}/
     raise NameCollisionError if @@register.include?(@name)
     @@register << @name
@@ -41,7 +43,7 @@ class Robot
 
   def self.display_names
     @@register.to_a.each do | name |
-       puts "My pet robot's name is #{name}, but we usually call him sparky"
+      puts "My pet robot's name is #{name}, but we usually call him sparky"
     end
   end
 end
@@ -50,6 +52,6 @@ Robot.new
 Robot.new
 generator = -> { 'AA111' }
 Robot.new(name_generator: generator)
-#puts Robot.new(name_generator: generator)
+# puts Robot.new(name_generator: generator)
 
 Robot.display_names
