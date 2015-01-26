@@ -3,8 +3,6 @@ require_relative 'sample'
 
 class DataScience
   my_data = DataLoader.new
-  my_data.read_in_json
-  my_data.build_data
   group_a, group_b = my_data.seperate_groups
 
   values = {}

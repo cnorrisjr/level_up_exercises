@@ -12,8 +12,12 @@ end
 
 require 'json'
 class DataLoader
+
+  attr_reader :parsed, :file_name
   def initialize(file_name = 'source_data.json')
     @file_name = file_name
+    read_in_json
+    build_data
   end
 
   def build_data
