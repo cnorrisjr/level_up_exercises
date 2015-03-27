@@ -25,9 +25,9 @@ get '/activate' do
 end
 
 post '/activate' do
-  bomb_status = session[:bomb].activate(params[:user_submit])
-  redirect back if bomb_status.eql?('inactive')
-  redirect "/deactivate" if bomb_status.eql?('active')
+  session[:bomb].activate(params[:user_submit])
+  redirect back if session[:bomb].status.eql?(:inactive)
+  redirect "/deactivate" if session[:bomb].status.eql?(:active)
 end
 
 get '/deactivate' do
@@ -36,9 +36,9 @@ end
 
 post '/deactivate' do
   session[:bomb].deactivate(params[:user_submit_de])
-  redirect "/explode" if session[:bomb].status.eql?('explode')
-  redirect "/config" if session[:bomb].status.eql?('inactive')
-  redirect back if session[:bomb].status.eql?('active')
+  redirect "/explode" if session[:bomb].status.eql?(:explode)
+  redirect "/config" if session[:bomb].status.eql?(:inactive)
+  redirect back if session[:bomb].status.eql?(:active)
 end
 
 get '/explode' do

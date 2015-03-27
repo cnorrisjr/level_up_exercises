@@ -1,8 +1,7 @@
-Feature: Evil mastermind wants to config a bomb,
-activate the bomb, and deactivate the bomb
+Feature: Evil mastermind, in order to verify that the bomb is working properly, I want to deactivate the bomb with the default deactivation code
 
 Background:
-  Given I am on the home page
+  Given I am on the config page
   When I use the default codes
   Then I land on the Activate page
   When I enter '1234' to activate the bomb

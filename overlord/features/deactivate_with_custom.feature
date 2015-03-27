@@ -1,8 +1,7 @@
-Feature: Evil mastermind wants to config a bomb,
-activate the bomb, and deactivate the bomb
+Feature: Evil mastermind, in order to verify that the bomb is working properly, I want to deactivate the bomb with a custom deactivation code
 
 Background:
-  Given I am on the home page
+  Given I am on the config page
   When I use '6789' as a act code, '9876' as a deact code
   Then I land on the Activate page
   When I enter '6789' to activate the bomb
